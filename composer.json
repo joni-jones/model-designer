@@ -1,0 +1,12 @@
+{
+    "name": "joni-jones/model-designer",
+    "description": "Visual Designer for model creating",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ievgen Sentiabov",
+            "email": "ievgen.sentiabov@gmail.com"
+        }
+    ]
+}
