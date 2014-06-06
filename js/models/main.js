@@ -33,6 +33,17 @@ App.Models.Table = Backbone.Model.extend({
         engine: 'InnoDB',
         charset: 'utf8',
         collation: 'utf8_general_ci'
+    },
+    initialize: function() {
+        this.collection = new App.Collections.FieldList();
+    },
+    validate: function(attrs, options) {
+        if (!attrs.name) {
+            return 'Name should not be empty';
+        }
+        if (!attrs.engine) {
+            return 'Engine should not be empty';
+        }
     }
 });
 var NumberModel = App.Models.Field.fullExtend({

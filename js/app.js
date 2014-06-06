@@ -5,4 +5,5 @@
         Collections: {},
         Views: {}
     };
+    window.vent = _.extend({}, Backbone.Events);
 }());
