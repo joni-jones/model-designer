@@ -17,14 +17,8 @@
     };
 
 })(Backbone.Collection);
-App.Collections.Table = Backbone.Collection.extend({
-    model: App.Models.Field,
-    defaults: {
-        name: '',
-        engine: 'InnoDB',
-        charset: 'utf8',
-        collation: 'utf8_general_ci'
-    }
+App.Collections.Schema = Backbone.Collection.extend({
+    model: App.Models.Table
 });
 App.Collections.List = Backbone.Collection.extend({
     model: App.Models.Field

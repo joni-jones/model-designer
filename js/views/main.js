@@ -43,12 +43,15 @@ App.Views.Collection = Backbone.View.extend({
 });
 var TableFieldView = App.Views.Item.fullExtend({
     model: App.Models.Field,
-    template: '#table-field',
-    tagName: 'tr'
+    template: '#table-item',
+    tagName: 'li'
 });
-var TableView = App.Views.Collection.extend({
-    collection: App.Collections.Table,
-    tagName: 'tbody',
+var TableView = App.Views.Collection.fullExtend({
+    model: App.Models.Table,
+    tagName: 'div',
+    defaults: {
+        collection: null
+    },
     initialize: function() {
         this.collection.on('add', this.addOne, this);
     },
@@ -74,7 +77,6 @@ var FieldListView = App.Views.Collection.extend({
     },
     addOne: function(model) {
         var view = new FielItemView({model: model});
-        console.log(view.render().el);
         this.$el.append(view.render().el);
         return this;
     }

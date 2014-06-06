@@ -23,7 +23,17 @@ App.Models.Field = Backbone.Model.extend({
         is_null: false, 
         default_value: '',
         is_pk: false, 
-        precision: ''
+        precision: '',
+        type: null
+    }
+});
+App.Models.Table = Backbone.Model.extend({
+    model: App.Models.Field,
+    defaults: {
+        name: '',
+        engine: 'InnoDB',
+        charset: 'utf8',
+        collation: 'utf8_general_ci'
     }
 });
 var NumberModel = App.Models.Field.fullExtend({
@@ -35,22 +45,26 @@ var NumberModel = App.Models.Field.fullExtend({
 });
 var CharModel = App.Models.Field.fullExtend({
     defaults: {
-        precision: 10
+        precision: 10,
+        type: 'char'
     }
 });
 var VarcharModel = App.Models.Field.fullExtend({
     defaults: {
-        precision: 60
+        precision: 60,
+        type: 'varchar'
     }
 });
 var IntegerModel = NumberModel.fullExtend({
     defaults: {
-        precision: 8
+        precision: 8,
+        type: 'integer'
     }
 });
 var TinyIntModel = NumberModel.fullExtend({
     defaults: {
-        precision: 4
+        precision: 4,
+        type: 'tinyint'
     }
 });
 
