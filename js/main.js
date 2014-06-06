@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var fieldListCollection = new App.Collections.List([
+    var fieldListCollection = new App.Collections.FieldList([
         {name: 'integer'},
         {name: 'tinyint'},
         {name: 'char'},

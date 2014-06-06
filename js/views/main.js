@@ -49,9 +49,6 @@ var TableFieldView = App.Views.Item.fullExtend({
 var TableView = App.Views.Collection.fullExtend({
     model: App.Models.Table,
     tagName: 'div',
-    defaults: {
-        collection: null
-    },
     initialize: function() {
         this.collection.on('add', this.addOne, this);
     },
@@ -71,7 +68,7 @@ var FielItemView = App.Views.Item.fullExtend({
     }
 });
 var FieldListView = App.Views.Collection.extend({
-    collection: App.Collections.List,
+    collection: App.Collections.FieldList,
     initialize: function() {
         this.addAll();
     },

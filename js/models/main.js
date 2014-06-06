@@ -28,7 +28,6 @@ App.Models.Field = Backbone.Model.extend({
     }
 });
 App.Models.Table = Backbone.Model.extend({
-    model: App.Models.Field,
     defaults: {
         name: '',
         engine: 'InnoDB',

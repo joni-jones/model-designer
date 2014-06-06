@@ -20,7 +20,7 @@
 App.Collections.Schema = Backbone.Collection.extend({
     model: App.Models.Table
 });
-App.Collections.List = Backbone.Collection.extend({
+App.Collections.FieldList = Backbone.Collection.extend({
     model: App.Models.Field
 });
 
