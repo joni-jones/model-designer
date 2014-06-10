@@ -58,12 +58,21 @@ var TableView = App.Views.Collection.fullExtend({
     render: function(){
         var template = _.template($(this.template).html());
         this.$el.html(template(this.model.toJSON()));
+        this.initDraggable();
         return this;
     },
     addOne: function(model) {
         var view = new TableFieldView({model: model});
         this.$el.find('ul').append(view.render().el);
         return this;
+    },
+    initDraggable: function() {
+        this.$el.draggable({
+            containment: 'parent',
+            cursor: 'pointer',
+            snap: true,
+            snapTolerance: 10
+        });
     }
 });
 var SchemaView = App.Views.Collection.fullExtend({
@@ -73,11 +82,10 @@ var SchemaView = App.Views.Collection.fullExtend({
         this.collection.on('add', this.addOne, this);
     },
     addOne: function(model) {
+        var self = this;
         var view = new TableView({model: model});
-        this.$el.append(view.render().el);
-        console.log(view.render().el);
-        console.log(this.el);
-        return this;
+        self.$el.append(view.render().el);
+        return self;
     }
 });
 var FieldItemView = App.Views.Item.fullExtend({

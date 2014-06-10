@@ -23,7 +23,7 @@
                 <h4><span class="glyphicon glyphicon-list"></span>Actions</h4>
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="#">Create Schema</a></li>
-                    <li><a href="#">Create Table</a></li>
+                    <li><a href="#add-table-modal" data-toggle="modal">Create Table</a></li>
                 </ul>
                 <h4><span class="glyphicon glyphicon-edit"></span>Datatypes</h4>
                 <div id="field-list-group" class="list-group pre-scrollable"></div>
@@ -36,6 +36,39 @@
             </div>
         </div>
     </div>
+    <div id="add-table-modal" class="modal fade bs-example-modal-sm" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Table</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Engine:</label>
+                            <div class="col-sm-9">
+                                <select name="engine" class="form-control">
+                                    <option value="InnoDB">InnoDB</option>
+                                    <option value="MyIsam">MyIsam</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="add btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script id="list-field" type="text/template">
         <span><%=name%></span>
     </script>
@@ -43,15 +76,14 @@
         <span class="badge"><%=name%>(<%=type%> <%=precision%>)<span>
     </script>
     <script id="table" type="text/template">
-        <div class="table-view">
-            <div class="table-head text-center">
-                <span class="glyphicon glypicon-th"></span>
-                <strong><%=name%></strong>
-            </div>
-            <ul class="list-unstyled"></ul>
+        <div class="table-head">
+            <span class="glyphicon glyphicon-th"></span>
+            <strong class="text-center"><%=name%></strong>
         </div>
+        <ul class="list-unstyled"></ul>
     </script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
