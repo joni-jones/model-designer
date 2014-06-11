@@ -54,11 +54,12 @@ var TableView = App.Views.Collection.fullExtend({
     },
     initialize: function() {
         this.model.collection.on('add', this.addOne, this);
+        this.initDraggable();
+        this.initDroppable();
     },
     render: function(){
         var template = _.template($(this.template).html());
         this.$el.html(template(this.model.toJSON()));
-        this.initDraggable();
         return this;
     },
     addOne: function(model) {
@@ -72,6 +73,16 @@ var TableView = App.Views.Collection.fullExtend({
             cursor: 'pointer',
             snap: true,
             snapTolerance: 10
+        });
+    },
+    initDroppable: function() {
+        var self = this;
+        self.$el.droppable({
+            drop: function(event, ui) {
+                /**
+                 * @TODO add drop actions
+                 */
+            }
         });
     }
 });
@@ -95,6 +106,16 @@ var FieldItemView = App.Views.Item.fullExtend({
     attributes: {
         href: '#',
         class: 'list-group-item'
+    },
+    initialize: function() {
+        this.initDraggable();
+    },
+    initDraggable: function() {
+        this.$el.draggable({
+            cursor: 'pointer',
+            helper: 'clone',
+            appendTo: '.table-view'
+        });
     }
 });
 var FieldListView = App.Views.Collection.extend({
@@ -126,5 +147,6 @@ var AddTableView = Backbone.View.extend({
         }
         vent.trigger('table:add', model);
         self.$el.modal('hide');
+        return true;
     }
 });
