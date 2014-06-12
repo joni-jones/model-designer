@@ -56,25 +56,29 @@ var NumberModel = App.Models.Field.fullExtend({
 var CharModel = App.Models.Field.fullExtend({
     defaults: {
         precision: 10,
-        type: 'char'
+        type: 'char',
+        name: 'char'
     }
 });
 var VarcharModel = App.Models.Field.fullExtend({
     defaults: {
         precision: 60,
-        type: 'varchar'
+        type: 'varchar',
+        name: 'varchar'
     }
 });
 var IntegerModel = NumberModel.fullExtend({
     defaults: {
         precision: 8,
-        type: 'integer'
+        type: 'integer',
+        name: 'integer'
     }
 });
 var TinyIntModel = NumberModel.fullExtend({
     defaults: {
         precision: 4,
-        type: 'tinyint'
+        type: 'tinyint',
+        name: 'tinyint'
     }
 });
 

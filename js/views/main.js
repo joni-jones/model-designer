@@ -1,4 +1,5 @@
 (function(View){
+    'use strict';
     // Additional extension layer for Views
     View.fullExtend = function(protoProps, staticProps){
         // Call default extend method
@@ -22,6 +23,12 @@ App.Views.Item = Backbone.View.extend({
         this.model.on('destroy', this.remove, this);
     },
     render: function(){
+        /**
+         * @TODO need to move id settings to concrete child class,
+         * @TODO but for now if call this.constructor._super.render()
+         * @TODO current render method get undefined model
+         */
+        this.model.set('id', this.model.cid);
         var template = _.template($(this.template).html());
         this.$el.html(template(this.model.toJSON()));
         return this;
@@ -53,6 +60,7 @@ var TableView = App.Views.Collection.fullExtend({
         class: 'table-view'
     },
     initialize: function() {
+        vent.on('drag-item:finish', this.addItem, this);
         this.model.collection.on('add', this.addOne, this);
         this.initDraggable();
         this.initDroppable();
@@ -78,12 +86,16 @@ var TableView = App.Views.Collection.fullExtend({
     initDroppable: function() {
         var self = this;
         self.$el.droppable({
-            drop: function(event, ui) {
-                /**
-                 * @TODO add drop actions
-                 */
+            drop: function(e, ui) {
+                //find id of fields list
+                vent.trigger('drag-item:stop', ui.draggable.find('span').data('id'));
             }
         });
+    },
+    addItem: function(model) {
+        var item = new App.Models.Field(model.attributes);
+        item.set('id', model.cid);
+        this.model.collection.add(item);
     }
 });
 var SchemaView = App.Views.Collection.fullExtend({
@@ -121,12 +133,17 @@ var FieldItemView = App.Views.Item.fullExtend({
 var FieldListView = App.Views.Collection.extend({
     collection: App.Collections.FieldList,
     initialize: function() {
+        vent.on('drag-item:stop', this.dragItem, this);
         this.addAll();
     },
     addOne: function(model) {
         var view = new FieldItemView({model: model});
         this.$el.append(view.render().el);
         return this;
+    },
+    dragItem: function(id) {
+        var model = this.collection.get(id);
+        vent.trigger('drag-item:finish', model);
     }
 });
 var AddTableView = Backbone.View.extend({

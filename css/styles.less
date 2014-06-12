@@ -1,5 +1,6 @@
 @custom-icon-font: 'FontAwesome';
 @dark-blue: #428BCA;
+@dark: #000000;
 body {
     padding-top: 50px;
 }
@@ -84,4 +85,15 @@ body {
 .glyphicon-keys:before{
     font-family: @custom-icon-font;
     content:"\f084";
+}
+.badge{
+    input{
+        color: @dark;
+    }
+    .input-sm{
+        border-radius: 0;
+        height: 20px;
+        line-height: 0.5;
+        padding: 0;
+    }
 }

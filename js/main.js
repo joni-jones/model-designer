@@ -1,10 +1,9 @@
 $(document).ready(function() {
     var fieldListCollection = new App.Collections.FieldList([
-        {name: 'integer'},
-        {name: 'tinyint'},
-        {name: 'char'},
-        {name: 'varchar'},
-        {name: 'text'}
+        new IntegerModel(),
+        new TinyIntModel(),
+        new CharModel(),
+        new VarcharModel()
     ]);
     //render sidebar fields list
     new FieldListView({
