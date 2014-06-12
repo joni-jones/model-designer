@@ -52,7 +52,7 @@ var TableFieldView = App.Views.Item.fullExtend({
     template: '#table-item',
     tagName: 'li'
 });
-var TableView = App.Views.Collection.fullExtend({
+var TableView = Backbone.View.extend({
     model: App.Models.Table,
     tagName: 'div',
     template: '#table',
@@ -126,7 +126,7 @@ var FieldItemView = App.Views.Item.fullExtend({
         this.$el.draggable({
             cursor: 'pointer',
             helper: 'clone',
-            appendTo: '.table-view'
+            zIndex: 1500
         });
     }
 });
