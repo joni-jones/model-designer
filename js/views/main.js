@@ -23,12 +23,6 @@ App.Views.Item = Backbone.View.extend({
         this.model.on('destroy', this.remove, this);
     },
     render: function(){
-        /**
-         * @TODO need to move id settings to concrete child class,
-         * @TODO but for now if call this.constructor._super.render()
-         * @TODO current render method get undefined model
-         */
-        this.model.set('id', this.model.cid);
         var template = _.template($(this.template).html());
         this.$el.html(template(this.model.toJSON()));
         return this;
@@ -93,7 +87,7 @@ var TableView = Backbone.View.extend({
     },
     addItem: function(model) {
         var item = new App.Models.Field(model.attributes);
-        item.set('id', model.cid);
+        item.set('id', item.cid);
         this.model.collection.add(item);
     }
 });
@@ -108,6 +102,21 @@ var SchemaView = App.Views.Collection.fullExtend({
         var view = new TableView({model: model});
         self.$el.append(view.render().el);
         return self;
+    },
+    getSchema: function() {
+        var self = this;
+        var arr = [];
+        self.collection.each(function(model) {
+            var obj = model.attributes;
+            obj.fields = [];
+            if (typeof model.collection !== 'undefined' && model.collection.length) {
+                model.collection.each(function(field) {
+                    obj.fields.push(field.attributes);
+                });
+            }
+            arr.push(obj);
+        });
+        return arr;
     }
 });
 var FieldItemView = App.Views.Item.fullExtend({
@@ -127,6 +136,10 @@ var FieldItemView = App.Views.Item.fullExtend({
             helper: 'clone',
             zIndex: 1500
         });
+    },
+    render: function() {
+        this.model.set('id', this.model.cid);
+        return App.Views.Item.prototype.render.apply(this);
     }
 });
 var FieldListView = App.Views.Collection.extend({
