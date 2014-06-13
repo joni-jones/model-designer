@@ -19,6 +19,10 @@
 
 })(Backbone.View);
 App.Views.Item = Backbone.View.extend({
+    events: {
+        'change input': 'changed',
+        'change select': 'changed'
+    },
     initialize: function(){
         this.model.on('destroy', this.remove, this);
     },
@@ -29,6 +33,13 @@ App.Views.Item = Backbone.View.extend({
     },
     remove: function(){
         this.$el.remove();
+    },
+    changed: function(e) {
+        var self = this;
+        var changed = e.currentTarget;
+        var obj = {};
+        obj[changed.name] = $(changed).val();
+        self.model.set(obj);
     }
 });
 App.Views.Collection = Backbone.View.extend({
@@ -128,6 +139,8 @@ var FieldItemView = App.Views.Item.fullExtend({
         class: 'list-group-item'
     },
     initialize: function() {
+        App.Views.Item.prototype.initialize.apply(this);
+        _.bindAll(this, 'changed');
         this.initDraggable();
     },
     initDraggable: function() {
