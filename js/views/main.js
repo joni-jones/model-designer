@@ -60,7 +60,6 @@ var TableView = Backbone.View.extend({
         class: 'table-view'
     },
     initialize: function() {
-        vent.on('drag-item:finish', this.addItem, this);
         this.model.collection.on('add', this.addOne, this);
         this.initDraggable();
         this.initDroppable();
@@ -87,8 +86,8 @@ var TableView = Backbone.View.extend({
         var self = this;
         self.$el.droppable({
             drop: function(e, ui) {
-                //find id of fields list
-                vent.trigger('drag-item:stop', ui.draggable.find('span').data('id'));
+                var model = App.Collections.fieldsCollection.get(ui.draggable.find('span').data('id'));
+                self.addItem(model);
             }
         });
     },
@@ -133,17 +132,12 @@ var FieldItemView = App.Views.Item.fullExtend({
 var FieldListView = App.Views.Collection.extend({
     collection: App.Collections.FieldList,
     initialize: function() {
-        vent.on('drag-item:stop', this.dragItem, this);
         this.addAll();
     },
     addOne: function(model) {
         var view = new FieldItemView({model: model});
         this.$el.append(view.render().el);
         return this;
-    },
-    dragItem: function(id) {
-        var model = this.collection.get(id);
-        vent.trigger('drag-item:finish', model);
     }
 });
 var AddTableView = Backbone.View.extend({

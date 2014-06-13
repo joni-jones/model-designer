@@ -1,5 +1,6 @@
+App.Collections.fieldsCollection = null;
 $(document).ready(function() {
-    var fieldListCollection = new App.Collections.FieldList([
+    App.Collections.fieldsCollection = new App.Collections.FieldList([
         new IntegerModel(),
         new TinyIntModel(),
         new CharModel(),
@@ -8,7 +9,7 @@ $(document).ready(function() {
     //render sidebar fields list
     new FieldListView({
         el: '#field-list-group',
-        collection: fieldListCollection
+        collection: App.Collections.fieldsCollection
     });
 
     var tables = new App.Collections.Schema();
