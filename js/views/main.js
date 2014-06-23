@@ -187,3 +187,21 @@ var AddTableView = Backbone.View.extend({
         return true;
     }
 });
+var RelationView = Backbone.View.extend({
+    model: App.Models.Relation,
+    initialize: function() {
+        vent.on('create-relation:finish', this.setDefaultCursor, this);
+        this.setRelationCursor();
+    },
+    setDefaultCursor: function() {
+        this.setCursor('default');
+    },
+    setRelationCursor: function() {
+        this.setCursor('cell');
+    },
+    setCursor: function(cursor) {
+        $('html').css({
+            'cursor': cursor
+        });
+    }
+});

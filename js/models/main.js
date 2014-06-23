@@ -81,4 +81,14 @@ var TinyIntModel = NumberModel.fullExtend({
         name: 'tinyint'
     }
 });
+App.Models.Relation = Backbone.Model.extend({
+    defaults: {
+        name: null,
+        column: null,
+        ref_column: null,
+        ref_table: null,
+        on_update: 'cascade',
+        on_delete: 'cascade'
+    }
+});
 

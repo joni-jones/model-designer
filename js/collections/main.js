@@ -23,4 +23,7 @@ App.Collections.Schema = Backbone.Collection.extend({
 App.Collections.FieldList = Backbone.Collection.extend({
     model: App.Models.Field
 });
+App.Collections.Relations = Backbone.Collection.extend({
+    model: App.Models.Relation
+});
 

@@ -24,6 +24,14 @@ $(document).ready(function() {
     
     $('.save-schema').on('click', function(e) {
         e.preventDefault();
-        console.log(JSON.stringify(schema.getSchema()));
+        alert(JSON.stringify(schema.getSchema()));
+    });
+
+    //create relation
+    $('.add-relation').on('click', function(e) {
+        e.preventDefault();
+        var relation = new RelationView({
+            model: new App.Models.Relation()
+        });
     });
 });
