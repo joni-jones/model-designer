@@ -55,7 +55,31 @@ App.Views.Collection = Backbone.View.extend({
 var TableFieldView = App.Views.Item.fullExtend({
     model: App.Models.Field,
     template: '#table-item',
-    tagName: 'li'
+    tagName: 'li',
+    events: {
+        'click span': 'addRelation'
+    },
+    addRelation: function() {
+        if (App.Models.currentRelation === null) {
+            return false;
+        }
+        var model = App.Models.currentRelation;
+        var column = this.model.get('name');
+        var id = this.model.get('id');
+        var tableName = this.$el.parents('.table-view').find('.table-head .text-center').text();
+        if (!model.get('ref_id')) {
+            model.set('ref_id', id);
+            model.set('ref_column', column);
+            model.set('ref_table', tableName);
+        } else {
+            model.set('id', id);
+            model.set('column', column);
+            model.set('name', 'fk_' + tableName + '_' + model.get('ref_table'));
+            vent.trigger('relation:add', model);
+            App.Models.currentRelation = null;
+        }
+        return true;
+    }
 });
 var TableView = Backbone.View.extend({
     model: App.Models.Table,
@@ -66,6 +90,7 @@ var TableView = Backbone.View.extend({
     },
     initialize: function() {
         this.model.collection.on('add', this.addOne, this);
+        vent.on('relation:add', this.addRelation, this);
         this.initDraggable();
         this.initDroppable();
     },
@@ -80,11 +105,15 @@ var TableView = Backbone.View.extend({
         return this;
     },
     initDraggable: function() {
+        var self = this;
         this.$el.draggable({
             containment: 'parent',
             cursor: 'pointer',
             snap: true,
-            snapTolerance: 10
+            snapTolerance: 10,
+            stop: function(e, ui) {
+                self.repaintRelations();
+            }
         });
     },
     initDroppable: function() {
@@ -100,6 +129,39 @@ var TableView = Backbone.View.extend({
         var item = new App.Models.Field(model.attributes);
         item.set('id', item.cid);
         this.model.collection.add(item);
+    },
+    addRelation: function(model) {
+        var relationModel = this.model.collection.get(model.get('id'));
+        if (typeof(relationModel) === 'undefined') {
+            return false;
+        }
+        this.model.relations.add(model);
+        this.drawRelation(model.get('id'), model.get('ref_id'));
+        return true;
+    },
+    drawRelation: function(startId, endId) {
+        console.log('draw relation');
+        var startPos = $('[data-field-id=' + startId + ']').offset();
+        var endPos = $('[data-field-id=' + endId + ']').offset();
+        var topRatio = 15; //ration to center line point
+        var leftRatio = 6;
+        var x1 = parseInt(startPos.left, 10) - leftRatio;
+        var y1 = parseInt(startPos.top, 10) + topRatio;
+        var x2 = parseInt(endPos.left, 10) - leftRatio;
+        var y2 = parseInt(endPos.top, 10) + topRatio;
+        var path = 'M' + x1 + ' ' + y1;
+        path += ' L' + x2 + ' ' + y2;
+        console.log(path);
+        App.Helpers.paper.path(path);
+        App.Helpers.paper.safari(); //call to avoid bug in safari browsers
+    },
+    repaintRelations: function() {
+        var self = this;
+        if (self.model.relations.length) {
+            self.model.relations.each(function(model) {
+                self.drawRelation(model.get('id'), model.get('ref_id'));
+            }, self);
+        }
     }
 });
 var SchemaView = App.Views.Collection.fullExtend({

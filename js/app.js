@@ -6,4 +6,5 @@
         Views: {}
     };
     window.vent = _.extend({}, Backbone.Events);
+    App.Helpers.paper = null;
 }());

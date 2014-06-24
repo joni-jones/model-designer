@@ -36,6 +36,7 @@ App.Models.Table = Backbone.Model.extend({
     },
     initialize: function() {
         this.collection = new App.Collections.FieldList();
+        this.relations = new App.Collections.Relations();
     },
     validate: function(attrs, options) {
         if (!attrs.name) {
@@ -83,8 +84,10 @@ var TinyIntModel = NumberModel.fullExtend({
 });
 App.Models.Relation = Backbone.Model.extend({
     defaults: {
+        id: null,
         name: null,
         column: null,
+        ref_id: null,
         ref_column: null,
         ref_table: null,
         on_update: 'cascade',

@@ -78,7 +78,7 @@
         <span data-id="<%=id%>"><%=name%></span>
     </script>
     <script id="table-item" type="text/template">
-        <span class="badge"><input type="text" name="name" class="input-sm col-xs-5" value="<%=name%>" />(<%=type%> <%=precision%>)</span>
+        <span class="badge" data-field-id="<%=id%>"><input type="text" name="name" class="input-sm col-xs-5" value="<%=name%>" />(<%=type%> <%=precision%>)</span>
     </script>
     <script id="table" type="text/template">
         <div class="table-head">
@@ -92,6 +92,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/models/main.js"></script>
     <script src="/js/collections/main.js"></script>

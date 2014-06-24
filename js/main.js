@@ -1,5 +1,7 @@
 App.Collections.fieldsCollection = null;
+App.Models.currentRelation = null;
 $(document).ready(function() {
+    var container = '.designer-container';
     App.Collections.fieldsCollection = new App.Collections.FieldList([
         new IntegerModel(),
         new TinyIntModel(),
@@ -30,8 +32,10 @@ $(document).ready(function() {
     //create relation
     $('.add-relation').on('click', function(e) {
         e.preventDefault();
-        var relation = new RelationView({
-            model: new App.Models.Relation()
-        });
+        if (!App.Views.paper) {
+            var $container = $(container);
+            App.Helpers.paper = new Raphael($container, $container.width(), $container.height());
+        }
+        App.Models.currentRelation = new App.Models.Relation();
     });
 });
